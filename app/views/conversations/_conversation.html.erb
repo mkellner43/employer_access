@@ -2,11 +2,17 @@
   <p>
     <strong>
       <%= conversation.groups %>
+      <hr/>
+      <%= conversation.status %>
+      <hr/>
+      <%= conversation.receiver.email %>
     </strong>
   </p>
   <% if action_name != "show" %>
-    <%= link_to "Show this conversation", conversation, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to "Edit this conversation", edit_conversation_path(conversation), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <div class="flex">
+      <%= link_to "Show this conversation", conversation, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+      <%= button_to "Enter Conversation", conversation, method: :patch, params: { conversation: { receiver_id: current_user.id, status: 'active' } }, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium"%>
+    </div>
     <hr class="mt-6">
   <% end %>
 </div>

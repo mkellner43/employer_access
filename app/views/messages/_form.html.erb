@@ -1,0 +1,7 @@
+<%= form_with(model: [@message.conversation, @message], data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset"}) do |form| %>
+  <div class="field">
+    <%= form.hidden_field :user_id, value: current_user.id %>
+    <%= form.text_field :content %>
+    <%= form.submit "Send" %>
+  </div>
+<% end %>

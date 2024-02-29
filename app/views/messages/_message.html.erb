@@ -1,3 +1,5 @@
-<p id="<%= dom_id message %>">
-  <%= time_ago_in_words(message.created_at) %> ago: <%= message.content %>
-</p>
+<%= turbo_frame_tag message do %>
+  <p>
+    <%= time_ago_in_words(message.created_at) %> ago: <%= message.content %>
+  </p>
+<% end %>

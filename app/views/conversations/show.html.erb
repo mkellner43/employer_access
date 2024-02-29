@@ -1,16 +1,13 @@
-<% if notice.present? %>
-  <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-<% end %>
 <%= turbo_stream_from @conversation %>
-<%= turbo_frame_tag "conversation" do %>
+<%= turbo_frame_tag @conversation do %>
   <%= render @conversation %>
-  <%= link_to "Edit this conversation", edit_conversation_path(@conversation), class: "" %>
-  <div class="inline-block ml-2">
-    <%= button_to "Destroy this conversation", conversation_path(@conversation), method: :delete, class: "" %>
+  <div class="flex">
+    <%= link_to "Edit this conversation", edit_conversation_path(@conversation), class: "bg-blue-700 text-white px-4 py-2 rounded-lg" %>
+    <%= button_to "Destroy this conversation", conversation_path(@conversation), method: :delete, class: "bg-blue-700 text-white px-4 py-2 rounded-lg" %>
+    <%= link_to sanitize("&larr; Back to conversations"), conversations_path, class: "bg-blue-700 text-white px-4 py-2 rounded-lg", data: { turbo_frame: "_top"} %>
   </div>
-  <%= link_to "Back to conversations", conversations_path, class: "", "data-turbo-frame": "_top" %>
 <% end %>
 <div id="messages">
   <%= render @conversation.messages %>
 </div>
-<%= turbo_frame_tag "new_message", src: new_conversation_message_path(@conversation), target: "_top" %>
+<%= turbo_frame_tag @message, src: new_conversation_message_path(@conversation) %>

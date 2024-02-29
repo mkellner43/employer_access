@@ -1,14 +1,16 @@
 class ConversationsController < ApplicationController
   before_action :set_conversation, only: %i[ show edit update destroy ]
   before_action :authenticate_user!
+  before_action :create_join_message, only: :update
 
   # GET /conversations or /conversations.json
   def index
-    @conversations = Conversation.all
+    @conversations = Conversation.includes(:receiver).all
   end
 
   # GET /conversations/1 or /conversations/1.json
   def show
+    @message = Message.new
   end
 
   # GET /conversations/new
@@ -40,6 +42,7 @@ class ConversationsController < ApplicationController
   def update
     respond_to do |format|
       if @conversation.update(conversation_params)
+        format.turbo_stream  { redirect_to @conversation, notice: 'Conversation was successfully updated.'}
         format.html { redirect_to conversation_url(@conversation), notice: "Conversation was successfully updated." }
         format.json { render :show, status: :ok, location: @conversation }
       else
@@ -67,6 +70,11 @@ class ConversationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def conversation_params
-      params.require(:conversation).permit(:groups, :sender_id)
+      params.require(:conversation).permit(:groups, :sender_id, :receiver_id, :status)
+    end
+
+    # Create a join message to notify other user someone has joined the conversation
+    def create_join_message
+      @conversation.messages.create!(user: current_user, content: "#{current_user.email} has joined the conversation")
     end
 end

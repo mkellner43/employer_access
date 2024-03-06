@@ -1,7 +1,12 @@
 <% if flash %>
   <% flash.each do |flash_type, message| %>
-    <div>
-      <%= message %>
+    <div data-controller = "remove-flash" data-remove-on-click = "true" >
+      <p data-remove-flash-target="flashMessage">
+        <%= message %>
+        <button type="button" data-action="click->remove-flash#removeElement" class="bg-red-500 text-white p-2 rounded">
+          x
+        </button>
+      </p>
     </div>
   <% end %>
 <% end %>

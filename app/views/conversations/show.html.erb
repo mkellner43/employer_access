@@ -7,7 +7,11 @@
     <%= link_to sanitize("&larr; Back to conversations"), conversations_path, class: "bg-blue-700 text-white px-4 py-2 rounded-lg", data: { turbo_frame: "_top"} %>
   </div>
 <% end %>
-<div id="messages">
-  <%= render @conversation.messages %>
+<div id="make_this_great">
+  <div id="messages">
+    <%= render @conversation.messages %>
+  </div>
+  <%= render 'messages/form', message: @message, conversation: @conversation %>
 </div>
-<%= render 'messages/form', message: @message, conversation: @conversation %>
+<%# need to make this look better make make_this_great div and look better better -- easy made %>
+<%# learn rails bugging first %>

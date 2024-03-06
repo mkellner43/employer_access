@@ -7,7 +7,7 @@ export default class extends Controller {
   connect() {
     // Set a timeout to remove the element after 3 seconds
     this.timer = setTimeout(() => {
-      this.removeElement();
+      this.flashMessageTarget.remove();
     }, 3000);
   }
 

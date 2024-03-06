@@ -1,1 +1,5 @@
 <%= turbo_stream.append "messages", @message %>
+<%= turbo_stream.prepend "flash", partial: "layouts/flash" %>
+<%= turbo_stream.replace "new_message_form" do  %>
+  <%= render "form", message: @conversation.messages.new, conversation: @conversation %>
+<% end %>

@@ -9,7 +9,7 @@ class MessagesController < ApplicationController
     @message = @conversation.messages.create!(message_params)
 
     respond_to do |format|
-      format.turbo_stream
+      format.turbo_stream { flash.now[:notice] = 'Message sent' }
       format.html { redirect_to @conversation }
     end
   end

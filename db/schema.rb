@@ -15,14 +15,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_27_151959) do
   enable_extension "plpgsql"
 
   create_table "conversations", force: :cascade do |t|
-    t.string "group"
     t.bigint "sender_id", null: false
     t.bigint "receiver_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "groups"
     t.string "status", default: "waiting", null: false
-    t.index ["receiver_id"], name: "index_conversations_on_receiver_id"
     t.index ["sender_id"], name: "index_conversations_on_sender_id"
   end
 

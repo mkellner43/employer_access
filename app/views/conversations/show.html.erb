@@ -10,4 +10,4 @@
 <div id="messages">
   <%= render @conversation.messages %>
 </div>
-<%= turbo_frame_tag @message, src: new_conversation_message_path(@conversation) %>
+<%= render 'messages/form', message: @message, conversation: @conversation %>

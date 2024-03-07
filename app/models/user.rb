@@ -3,8 +3,12 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  enum role: { user: "user", admin: "admin"}
+  enum role: { user: "user", admin: "admin" }
   validate :valid_role
+
+  def self.email_split
+    all.map { |user| user.email.split('@')[0].split('.').join(" ") }
+  end
 
   private
 

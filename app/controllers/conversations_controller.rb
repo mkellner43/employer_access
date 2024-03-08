@@ -17,7 +17,6 @@ class ConversationsController < ApplicationController
   def new
     @conversation = Conversation.new
     @conversation.sender_id = current_user
-    @user_full_names = User.email_split
   end
 
   # GET /conversations/1/edit
@@ -66,7 +65,7 @@ class ConversationsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_conversation
-    @conversation = Conversation.find(params[:id])
+    @conversation = Conversation.includes(messages: :user).find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

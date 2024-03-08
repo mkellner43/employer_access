@@ -6,8 +6,8 @@ class User < ApplicationRecord
   enum role: { user: "user", admin: "admin" }
   validate :valid_role
 
-  def self.email_split
-    all.map { |user| user.email.split('@')[0].split('.').join(" ") }
+  def email_split
+    email.split('@')[0].split('.').join(" ")
   end
 
   private

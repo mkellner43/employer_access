@@ -5,6 +5,6 @@ export default class extends Controller {
   connect() {}
 
   clearForm() {
-    this.element.querySelector("input[type=text]").value = "";
+    document.getElementById("message_content").value = "";
   }
 }

@@ -11,6 +11,7 @@ class ConversationsController < ApplicationController
   # GET /conversations/1 or /conversations/1.json
   def show
     @message = Message.new
+    @status = @conversation.status
   end
 
   # GET /conversations/new

@@ -1,2 +1,8 @@
 <%= turbo_stream.append "messages", @message %>
+<% if @respond %>
+  <%= turbo_stream.append "messages", @respond %>
+<% end %>
+<% if @status %>
+  <%= turbo_stream.replace "conversation_status", @status.capitalize %>
+<% end %>
 <%= turbo_stream.prepend "flash", partial: "layouts/flash" %>

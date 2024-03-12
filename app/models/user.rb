@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  enum role: { user: "user", admin: "admin" }
+  enum role: { user: "user", admin: "admin", agent: "agent", robot: "robot" }
   validate :valid_role
 
   def email_split

@@ -4,7 +4,7 @@
     <div class="relative flex items-center space-x-4">
       <%# can add avatar here %>
       <%# <div class="relative">
-        <span class="absolute text-green-500 right-0 bottom-0">
+        <span class="absolute text-green-500 right-0 bottom-0">current_user
           <svg width="20" height="20">
             <circle cx="8" cy="8" r="8" fill="currentColor"></circle>
           </svg>
@@ -15,7 +15,7 @@
         <div class="text-2xl mt-1 flex items-center">
           <span class="text-gray-700 mr-3">Group: <%= @conversation.groups.capitalize %></span>
         </div>
-        <span id='conversation_status' class="text-lg text-gray-600">Status: <%= @status.capitalize %></span>
+        <span id='conversation_status' class="text-lg text-gray-600">Status: <%= @conversation.status.capitalize %></span>
         <span class="text-lg text-gray-600">ID: <%= @conversation.id %></span>
       </div>
     </div>
@@ -37,8 +37,9 @@
     </div>
   </div>
   <div id="messages"
-       class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch" data-controller="chat-scroll" data-action="turbo:after-stream-render->chat-scroll#scroll">
-    <%= render @conversation.messages %>
+       class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch h-full" data-controller="chat-scroll" data-action="turbo:after-stream-render->chat-scroll#scroll">
+       <div class="flex-grow"></div>
+    <%= render @conversation.messages, user: current_user %>
   </div>
-  <%= render 'messages/form', message: @message, conversation: @conversation %>
+  <%= render 'messages/form', message: @message, conversation: @conversation, user: current_user %>
 <% end %>

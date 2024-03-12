@@ -1,7 +1,7 @@
 class ConversationsController < ApplicationController
   before_action :set_conversation, only: %i[show edit update destroy]
   before_action :authenticate_user!
-  before_action :create_join_message, only: :update
+  after_action :create_join_message, only: :update
 
   # GET /conversations or /conversations.json
   def index
@@ -11,7 +11,6 @@ class ConversationsController < ApplicationController
   # GET /conversations/1 or /conversations/1.json
   def show
     @message = Message.new
-    @status = @conversation.status
   end
 
   # GET /conversations/new
@@ -76,6 +75,10 @@ class ConversationsController < ApplicationController
 
   # Create a join message to notify other user someone has joined the conversation
   def create_join_message
-    @conversation.messages.create!(user: current_user, content: "#{current_user.email} has joined the conversation")
+    if current_user.role == 'agent' && @conversation.status == 'active'
+      @conversation.messages.create!(user: current_user, content: "#{current_user.email} has joined the conversation")
+    elsif @conversation.status == 'completed'
+      @conversation.messages.create!(user: current_user, content: "#{current_user.email} has left the conversation")
+    end
   end
 end

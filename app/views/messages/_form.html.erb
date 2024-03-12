@@ -1,6 +1,6 @@
 <div class="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0" >
   <%= form_with(model: [conversation, message], id: "#{dom_id(message)}_form", class: 'relative flex', data: { controller: 'clear-form', action: 'turbo:submit-end->clear-form#clearForm'}) do |form| %>
-    <%= form.hidden_field :user_id, value: current_user.id %>
+    <%= form.hidden_field :user_id, value: user.id %>
     <div class='w-full relative flex justify-center items-center'>
       <%= form.text_area :content, class: "w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-4 pr-28 bg-gray-200 rounded-md py-3 resize-none", rows: 1, placeholder: 'How can we help?' %>
       <div class="absolute right-0 items-center sm:flex">

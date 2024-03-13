@@ -5,7 +5,9 @@ class ConversationsController < ApplicationController
 
   # GET /conversations or /conversations.json
   def index
-    @conversations = Conversation.includes(:receiver).all
+    # @conversations = Conversation.includes(:receiver).all
+    @q = Conversation.includes(:receiver).ransack(params[:q])
+    @conversations = @q.result(include: :receiver, distinct: true)
   end
 
   # GET /conversations/1 or /conversations/1.json

@@ -4,6 +4,10 @@
       <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
         <%# search form %>
         <div class="w-full md:w-1/2">
+          <%= search_form_for @q do |f| %>
+            <%= f.search_field :status_or_groups_cont %>
+            <%= f.submit %>
+          <% end %>
           <form class="flex items-center">
             <label for="simple-search" class="sr-only">Search</label>
             <div class="relative w-full">
@@ -81,12 +85,12 @@
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" class="px-4 py-3">Status</th>
-              <th scope="col" class="px-4 py-3">Employer Group</th>
-              <th scope="col" class="px-4 py-3">Client Name</th>
-              <th scope="col" class="px-4 py-3">Assignee</th>
-              <th scope="col" class="px-4 py-3">Created</th>
-              <th scope="col" class="px-4 py-3">Updated</th>
+              <th scope="col" class="px-4 py-3"><%= sort_link(@q, :status)%></th>
+              <th scope="col" class="px-4 py-3"><%= sort_link(@q, :groups, "Employer Group")%></th>
+              <th scope="col" class="px-4 py-3"><%= sort_link(@q, :sender, "Client Name")%></th>
+              <th scope="col" class="px-4 py-3"><%= sort_link(@q, :receiver, "Assignee")%></th>
+              <th scope="col" class="px-4 py-3"><%= sort_link(@q, :created_at)%></th>
+              <th scope="col" class="px-4 py-3"><%= sort_link(@q, :updated_at)%></th>
               <th scope="col" class="px-4 py-3">
                 <span class="sr-only">Actions</span>
               </th>

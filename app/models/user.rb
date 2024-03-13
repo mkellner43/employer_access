@@ -10,6 +10,10 @@ class User < ApplicationRecord
     email.split('@')[0].split('.').join(" ")
   end
 
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "email", "id", "role", "updated_at"]
+  end
+
   private
 
   def valid_role

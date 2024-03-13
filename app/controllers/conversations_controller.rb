@@ -1,4 +1,5 @@
 class ConversationsController < ApplicationController
+  include Pagy::Backend
   before_action :set_conversation, only: %i[show edit update destroy]
   before_action :authenticate_user!
   after_action :create_join_message, only: :update
@@ -6,8 +7,9 @@ class ConversationsController < ApplicationController
   # GET /conversations or /conversations.json
   def index
     # @conversations = Conversation.includes(:receiver).all
-    @q = Conversation.includes(:receiver).ransack(params[:q])
-    @conversations = @q.result(include: :receiver, distinct: true)
+    @q = Conversation.ransack(params[:q])
+    @conversations = @q.result(distinct: true).includes(:receiver, :sender)
+    @pagy, @conversations = pagy(@q.result(distinct: true).includes(:receiver, :sender), items: 10)
   end
 
   # GET /conversations/1 or /conversations/1.json

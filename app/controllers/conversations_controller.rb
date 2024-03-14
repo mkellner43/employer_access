@@ -6,7 +6,7 @@ class ConversationsController < ApplicationController
 
   # GET /conversations or /conversations.json
   def index
-    # @conversations = Conversation.includes(:receiver).all
+    authorize Conversation
     @q = Conversation.ransack(params[:q])
     @conversations = @q.result(distinct: true).includes(:receiver, :sender)
     @pagy, @conversations = pagy(@q.result(distinct: true).includes(:receiver, :sender), items: 10)

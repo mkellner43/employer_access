@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
+  include ContextCollector
   before_action :set_conversation, only: %i[new create]
-  before_action :set_user
 
   def new
     @message = @conversation.messages.new
@@ -16,24 +16,6 @@ class MessagesController < ApplicationController
       format.turbo_stream { flash.now[:notice] = 'Message sent' }
       format.html { redirect_to @conversation }
     end
-  end
-
-  def collect_context
-    last_user_message = @conversation.messages.where(user_id: 3).last
-    automatic_response = case last_user_message&.content
-                         when "What is the members ID?"
-                           @conversation.messages.create(content: "What is the members date of birth?", user_id: 3)
-                         when "What is the members date of birth?"
-                           @conversation.messages.create(content: "What is the members zip code?", user_id: 3)
-                         when "What is the members zip code?"
-                           @conversation.update! status: "waiting"
-                           update_status
-                           @conversation.messages.create(content: "Unable to locate member. Connecting to live agent...",
-                                                         user_id: 3)
-                         else
-                           @conversation.messages.create(content: "What is the members ID?", user_id: 3)
-                         end
-    update_messages_stream(automatic_response)
   end
 
   private
@@ -53,10 +35,6 @@ class MessagesController < ApplicationController
                                                              }
   end
 
-  def set_user
-    @user = current_user
-  end
-
   def set_conversation
     @conversation = Conversation.find(params[:conversation_id])
   end
@@ -65,5 +43,3 @@ class MessagesController < ApplicationController
     params.require(:message).permit(:content, :user_id)
   end
 end
-
-# seems to be an issue with the locals being passed in and accessed differently

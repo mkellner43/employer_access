@@ -49,7 +49,8 @@ class ConversationsController < ApplicationController
   def update
     respond_to do |format|
       if @conversation.update(conversation_params)
-        format.turbo_stream  { redirect_to @conversation, notice: 'Conversation was successfully updated.' }
+        update_status
+        format.turbo_stream { redirect_to @conversation, notice: 'Conversation was successfully updated.' }
         format.html { redirect_to conversation_url(@conversation), notice: 'Conversation was successfully updated.' }
         format.json { render :show, status: :ok, location: @conversation }
       else
@@ -84,9 +85,13 @@ class ConversationsController < ApplicationController
   # Create a join message to notify other user someone has joined the conversation
   def create_join_message
     if current_user.role == 'agent' && @conversation.status == 'active'
-      @conversation.messages.create!(user: current_user, content: "#{current_user.email} has joined the conversation")
+      message = @conversation.messages.create!(user: current_user,
+                                               content: "#{current_user.email} has joined the conversation")
+      update_messages_stream(message)
     elsif @conversation.status == 'completed'
-      @conversation.messages.create!(user: current_user, content: "#{current_user.email} has left the conversation")
+      message = @conversation.messages.create!(user: current_user,
+                                               content: "#{current_user.email} has left the conversation")
+      update_messages_stream(message)
     end
   end
 end

@@ -1,5 +1,6 @@
 module ContextCollector
   extend ActiveSupport::Concern
+  include Broadcast
 
   def collect_context
     last_user_message = @conversation.messages.where(user_id: 3).last

@@ -1,12 +1,14 @@
-<%= turbo_frame_tag dom_id(message) do %>
-  <div class="flex items-end <%= message.user.id == user.id ? 'justify-end' : '' %>">
-    <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 <%= message.user.id == user.id ? 'order-1 items-end' : 'order-2 items-start' %>">
-      <div>
-        <span class="px-4 py-2 rounded-lg inline-block <%= message.user.id == user.id ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-600' %>">
-          <%= message.content %>
-        </span>
-      </div>
+<%= turbo_frame_tag dom_id(message), data: { user_id: message.user.id, controller: 'message-ui' }, class: 'flex items-end' do %>
+  <div id="message-section"
+       class="flex flex-col space-y-2 text-xs max-w-xs mx-2"
+       data-message-ui-target="messageSection">
+    <div>
+      <span class="px-4 py-2 rounded-lg inline-block"
+            data-message-ui-target="messageSpan">
+        <%= message.content %>
+      </span>
     </div>
-    <img src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="My profile" class="w-6 h-6 rounded-full <%= message.user.id == user.id ? 'order-2' : 'order-1' %>">
   </div>
+  <img src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
+    alt="My profile" class="w-6 h-6 rounded-full" data-message-ui-target="messageImg" />
 <% end %>

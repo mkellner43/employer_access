@@ -1,5 +1,6 @@
 class ConversationsController < ApplicationController
   include Pagy::Backend
+  include ContextCollector
   before_action :set_conversation, only: %i[show edit update destroy]
   before_action :authenticate_user!
   after_action :create_join_message, only: :update
@@ -15,6 +16,7 @@ class ConversationsController < ApplicationController
   # GET /conversations/1 or /conversations/1.json
   def show
     @message = Message.new
+    @user = current_user
   end
 
   # GET /conversations/new
@@ -29,7 +31,9 @@ class ConversationsController < ApplicationController
   # POST /conversations or /conversations.json
   def create
     @conversation = Conversation.new(conversation_params)
-
+    collect_context
+    # need to call context_collector here
+    # move stream methods to concern
     respond_to do |format|
       if @conversation.save
         format.html { redirect_to conversation_url(@conversation), notice: 'Conversation was successfully created.' }

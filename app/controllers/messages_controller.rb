@@ -20,26 +20,11 @@ class MessagesController < ApplicationController
 
   private
 
-  # def update_status
-  #   Turbo::StreamsChannel.broadcast_update_to @conversation, target: "conversation_status",
-  #                                                            html: "Group: #{@conversation.status.capitalize}"
-  # end
-
-  # def update_messages_stream(message)
-  #   Turbo::StreamsChannel.broadcast_append_to @conversation, target: "messages",
-  #                                                            partial: 'messages/message',
-  #                                                            locals: {
-  #                                                              conversation: @conversation,
-  #                                                              message: message,
-  #                                                              user: current_user
-  #                                                            }
-  # end
-
   def set_conversation
     @conversation = Conversation.find(params[:conversation_id])
   end
 
   def message_params
-    params.require(:message).permit(:content, :user_id)
+    params.require(:message).permit(:content, :user_id, :attachment)
   end
 end

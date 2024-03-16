@@ -12,6 +12,9 @@
       </span>
     </div>
   </div>
-  <img src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-    alt="My profile" class="w-6 h-6 rounded-full" data-message-ui-target="messageImg" />
+  <% if message.user.avatar.attached %>
+    <%= image_tag gravatar_image_url(message.user.avatar.variant(resize_to_limit: [36, 36])), class: 'w-6 h-6 rounded-full',data: { message_ui_target: 'messageImg' } %>
+  <% else %>
+    <%= image_tag gravatar_image_url(message.user.email), class: 'w-6 h-6 rounded-full', data: { message_ui_target: 'messageImg' } %>
+  <% end %>
 <% end %>

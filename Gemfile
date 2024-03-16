@@ -77,3 +77,5 @@ gem "devise", "~> 4.9"
 gem "pundit", "~> 2.3"
 
 gem "ruby-vips", "~> 2.2"
+
+gem "gravatar_image_tag", "~> 1.2"

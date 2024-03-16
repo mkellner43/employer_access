@@ -17,6 +17,7 @@ class ConversationsController < ApplicationController
   def show
     @message = Message.new
     @user = current_user
+    @messages = @conversation.messages.includes(:user)
   end
 
   # GET /conversations/new
@@ -31,11 +32,9 @@ class ConversationsController < ApplicationController
   # POST /conversations or /conversations.json
   def create
     @conversation = Conversation.new(conversation_params)
-    collect_context
-    # need to call context_collector here
-    # move stream methods to concern
     respond_to do |format|
       if @conversation.save
+        collect_context
         format.html { redirect_to conversation_url(@conversation), notice: 'Conversation was successfully created.' }
         format.json { render :show, status: :created, location: @conversation }
       else

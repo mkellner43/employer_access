@@ -28,3 +28,5 @@ class MessagesController < ApplicationController
     params.require(:message).permit(:content, :user_id, :attachment)
   end
 end
+
+# maybe just do your own avatar with active storage or figure out how else to do it with broadcasting

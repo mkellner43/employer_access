@@ -9,11 +9,9 @@ class User < ApplicationRecord
   has_many :sent_conversations, class_name: 'Conversation', foreign_key: 'sender_id', dependent: :destroy
   has_many :received_conversations, class_name: 'Conversation', foreign_key: 'receiver_id', dependent: :destroy
   has_many :messages, dependent: :destroy
-  before_create :set_default_avatar
 
-  def set_default_avatar
-    avatar.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'default_avatar.png')),
-                  filename: 'default_avatar.png', content_type: 'image/png')
+  def full_name
+    "#{first_name} #{last_name}"
   end
 
   def self.ransackable_attributes(auth_object = nil)

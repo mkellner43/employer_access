@@ -112,10 +112,11 @@ GEM
     drb (2.2.0)
       ruby2_keywords
     erubi (1.12.0)
+    faker (3.2.3)
+      i18n (>= 1.8.11, < 2)
     ffi (1.16.3)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    gravatar_image_tag (1.2.0)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
@@ -305,7 +306,7 @@ DEPENDENCIES
   capybara
   debug
   devise (~> 4.9)
-  gravatar_image_tag (~> 1.2)
+  faker (~> 3.2)
   image_processing (~> 1.2)
   importmap-rails
   jbuilder

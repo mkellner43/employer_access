@@ -3,7 +3,7 @@ class ConversationsController < ApplicationController
   include ContextCollector
   before_action :set_conversation, only: %i[show edit update destroy]
   before_action :authenticate_user!
-  after_action :create_join_message, only: :update
+  after_action :create_action_message, only: :update
 
   # GET /conversations or /conversations.json
   def index
@@ -15,6 +15,7 @@ class ConversationsController < ApplicationController
 
   # GET /conversations/1 or /conversations/1.json
   def show
+    authorize Conversation
     @message = Message.new
     @user = current_user
     @messages = @conversation.messages.includes(:user)
@@ -27,7 +28,9 @@ class ConversationsController < ApplicationController
   end
 
   # GET /conversations/1/edit
-  def edit; end
+  def edit
+    authorize Conversation
+  end
 
   # POST /conversations or /conversations.json
   def create
@@ -82,7 +85,7 @@ class ConversationsController < ApplicationController
   end
 
   # Create a join message to notify other user someone has joined the conversation
-  def create_join_message
+  def create_action_message
     if current_user.role == 'agent' && @conversation.status == 'active'
       message = @conversation.messages.create!(user: current_user,
                                                content: "#{current_user.email} has joined the conversation")

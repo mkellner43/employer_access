@@ -7,6 +7,14 @@ class ConversationPolicy < ApplicationPolicy
   end
 
   def index?
-    user.role == 'agent'
+    user.role == 'agent' || user.role == 'admin'
+  end
+
+  def show?
+    user.role == 'agent' || user.role == 'admin' || user == conversation.sender
+  end
+
+  def edit?
+    user.role == 'agent' || user.role == 'admin'
   end
 end

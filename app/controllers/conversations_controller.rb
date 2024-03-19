@@ -52,9 +52,14 @@ class ConversationsController < ApplicationController
     respond_to do |format|
       if @conversation.update(conversation_params)
         update_status
-        format.turbo_stream { redirect_to @conversation, notice: 'Conversation was successfully updated.' }
-        format.html { redirect_to conversation_url(@conversation), notice: 'Conversation was successfully updated.' }
-        format.json { render :show, status: :ok, location: @conversation }
+        if current_user.role == 'user'
+          format.turbo_stream { redirect_to @conversation, notice: 'Conversation was successfully updated.' }
+          format.html { redirect_to @conversation, notice: 'Conversation was successfully updated.' }
+          format.json { render :show, status: :ok, location: @conversation }
+        else
+          format.turbo_stream { redirect_to conversations_path, notice: 'Conversation was successfully updated.' }
+          format.html { redirect_to conversations_path, notice: 'Conversation was successfully updated.' }
+        end
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @conversation.errors, status: :unprocessable_entity }

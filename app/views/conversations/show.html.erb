@@ -1,22 +1,22 @@
 <%= turbo_stream_from @conversation %>
 <%= turbo_frame_tag dom_id(@conversation), class: "flex-1 p:2 sm:p-6 justify-between flex flex-col h-screen" do %>
   <div class="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
-    <div class="relative flex items-center space-x-4">
-      <%# can add avatar here %>
-      <%# <div class="relative">
-        <span class="absolute text-green-500 right-0 bottom-0">current_user
-          <svg width="20" height="20">
-            <circle cx="8" cy="8" r="8" fill="currentColor"></circle>
-          </svg>
-        </span>
-        <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="" class="w-10 sm:w-16 h-10 sm:h-16 rounded-full">
-      </div> %>
-      <div class="flex flex-col leading-tight">
-        <div class="text-2xl mt-1 flex items-center">
-          <span class="text-gray-700 mr-3">Group: <%= @conversation.groups.capitalize %></span>
-        </div>
-        <span id='conversation_status' class="text-lg text-gray-600">Status: <%= @conversation.status.capitalize %></span>
-        <span class="text-lg text-gray-600">ID: <%= @conversation.id %></span>
+    <div class="flex flex-col space-x-4">
+      <div class="flex items-center">
+        <%= image_tag user_avatar(@conversation.receiver, size: 64), class: "w-16 h-16 rounded-full", alt: @conversation.receiver.full_name %>
+        <p class="ml-2 text-sm text-gray-700"><%= @conversation.receiver.full_name %></p>
+      </div>
+      <div class="flex items-center">
+        <span class="text-lg text-gray-700">Group:</span>
+        <span class="ml-2 text-lg text-gray-600 capitalize"><%= @conversation.groups %></span>
+      </div>
+      <div class="flex items-center">
+        <span class="text-lg text-gray-700">Status:</span>
+        <span id="conversation_status" class="ml-2 text-lg text-gray-600 capitalize"><%= @conversation.status %></span>
+      </div>
+      <div class="flex items-center">
+        <span class="text-lg text-gray-700">ID:</span>
+        <span class="ml-2 text-lg text-gray-600"><%= @conversation.id %></span>
       </div>
     </div>
     <div class="flex items-center space-x-2">
@@ -33,7 +33,7 @@
         </svg>
       </button>
       <%# Leave chat button %>
-      <%= button_to "LEAVE", conversation_path(@conversation), method: :patch, params: { conversation: { status: "completed" } }, class:"inline-flex items-center justify-center rounded-lg border h-10 px-2 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none cursor-pointer" %>
+      <%= button_to "LEAVE", conversation_path(@conversation), method: :patch, params: { conversation: { status: "completed" } }, data: {turbo_frame: (current_user.role == 'user' ? nil : '_top')}, class:"inline-flex items-center justify-center rounded-lg border h-10 px-2 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none cursor-pointer" %>
     </div>
   </div>
   <div id="messages"
@@ -42,7 +42,6 @@
     <% @messages.each do |message| %>
       <%= render 'messages/message', message: message %>
     <% end %>
-    <%# <%= render @conversation.messages, user: current_user %>
   </div>
   <%= render 'messages/form', message: @message, conversation: @conversation, user: current_user %>
 <% end %>

@@ -7,10 +7,10 @@ class Conversation < ApplicationRecord
   belongs_to :receiver, class_name: 'User', optional: true
 
   def self.ransackable_attributes(auth_object = nil)
-    ["created_at", "groups", "id", "receiver_id", "sender_id", "status", "updated_at"]
+    ["created_at", "groups", "id", "status", "updated_at"]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["messages", "receiver", "sender"]
+    ["receiver", "sender"]
   end
 end

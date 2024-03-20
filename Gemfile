@@ -78,3 +78,5 @@ gem "pundit", "~> 2.3"
 gem "ruby-vips", "~> 2.2"
 
 gem "faker", "~> 3.2", :group => :"development test"
+
+gem "noticed", "~> 2.1"

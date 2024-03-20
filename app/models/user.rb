@@ -6,9 +6,10 @@ class User < ApplicationRecord
   enum role: { user: "user", admin: "admin", agent: "agent", robot: "robot" }
   validates :role, inclusion: { in: roles.keys }
   has_one_attached :avatar
-  has_many :sent_conversations, class_name: 'Conversation', foreign_key: 'sender_id', dependent: :destroy
-  has_many :received_conversations, class_name: 'Conversation', foreign_key: 'receiver_id', dependent: :destroy
   has_many :messages, dependent: :destroy
+  has_many :notifications, as: :recipient, dependent: :destroy, class_name: "Noticed::Notification"
+  has_many :sent_conversations, foreign_key: 'sender_id', dependent: :destroy, class_name: "Conversation"
+  has_many :received_conversations, foreign_key: 'receiver_id', dependent: :destroy, class_name: "Conversation"
 
   def full_name
     "#{first_name} #{last_name}"

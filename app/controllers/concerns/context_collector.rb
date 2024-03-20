@@ -3,7 +3,7 @@ module ContextCollector
   include Broadcast
 
   def collect_context
-    last_user_message = @conversation.messages.where(user_id: 3).last
+    last_user_message = @conversation.messages.where(role: 'robot').last
     automatic_response = case last_user_message&.content
                          when "What is the members ID?"
                            @conversation.messages.create(content: "What is the members date of birth?", user_id: 3)

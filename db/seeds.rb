@@ -22,7 +22,7 @@ User.create!(
   email: "do-not-reply@anthem.com",
   password: 'password',
   first_name: "Anthem",
-  last_name: "Automated Emails",
+  last_name: "Chatbot",
   role: 'robot'
 )
 

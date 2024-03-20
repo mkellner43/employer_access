@@ -1,0 +1,7 @@
+<%= turbo_stream_from "notifications_#{current_user.id}" if current_user %>
+<h1>Notifications</h1>
+<ul id="notifications" >
+  <% @notifications.each do |notification| %>
+    <%= render 'notification', notification: notification %>
+  <% end %>
+</ul>

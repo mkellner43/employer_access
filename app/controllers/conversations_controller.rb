@@ -52,14 +52,9 @@ class ConversationsController < ApplicationController
     respond_to do |format|
       if @conversation.update(conversation_params)
         update_status
-        if current_user.role == 'user'
-          format.turbo_stream { redirect_to @conversation, notice: 'Conversation was successfully updated.' }
-          format.html { redirect_to @conversation, notice: 'Conversation was successfully updated.' }
-          format.json { render :show, status: :ok, location: @conversation }
-        else
-          format.turbo_stream { redirect_to conversations_path, notice: 'Conversation was successfully updated.' }
-          format.html { redirect_to conversations_path, notice: 'Conversation was successfully updated.' }
-        end
+        format.turbo_stream { redirect_to determine_redirect_path, notice: 'Conversation was successfully updated.' }
+        format.html { redirect_to determine_redirect_path, notice: 'Conversation was successfully updated.' }
+        format.json { render :show, status: :ok, location: @conversation }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @conversation.errors, status: :unprocessable_entity }
@@ -99,6 +94,14 @@ class ConversationsController < ApplicationController
       message = @conversation.messages.create!(user: current_user,
                                                content: "#{current_user.email} has left the conversation")
       update_messages_stream(message)
+    end
+  end
+
+  def determine_redirect_path
+    if current_user.role == 'user' || conversation_params[:status] == 'active'
+      @conversation
+    else
+      conversations_path
     end
   end
 end

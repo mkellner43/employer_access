@@ -13,4 +13,5 @@
     </div>
   </div>
   <%= image_tag user_avatar(message.user), class: 'w-6 h-6 rounded-full', data: { message_ui_target: 'messageImg' } %>
+  <%= message.user.email%>
 <% end %>

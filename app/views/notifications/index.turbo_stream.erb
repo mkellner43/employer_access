@@ -1,7 +1,7 @@
-<%= turbo_stream.append :notification_frame, target: '.notification-frame' do %>
+<%= turbo_stream.append :notification_frame do %>
   <%= render partial: 'notifications/notification', collection: @notifications %>
 <% end %>
-<%= turbo_stream.append :notification_frame_index, target: '.notification-frame' do %>
+<%= turbo_stream.append :notification_frame_index do %>
   <%= render partial: 'notifications/notification', collection: @notifications %>
 <% end %>
 <%= turbo_stream.replace :pagination do %>

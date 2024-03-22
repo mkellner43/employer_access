@@ -7,6 +7,7 @@ export default class extends Controller {
 
   show(e) {
     if (e.detail.url.toString().includes("/notifications")) {
+      this.loaderTarget.classList.add("flex");
       this.loaderTarget.classList.remove("hidden");
     }
   }

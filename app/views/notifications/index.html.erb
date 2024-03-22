@@ -1,7 +1,9 @@
 <%= turbo_stream_from "notifications_#{current_user.id}" if current_user %>
-<h1>Notifications</h1>
-<ul id="notifications" >
-  <% @notifications.each do |notification| %>
-    <%= render 'notification', notification: notification %>
-  <% end %>
-</ul>
+<%= link_to "Notifications", notifications_path,
+  class:"block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400" %>
+<%= turbo_frame_tag :notification_frame_index do %>
+  <%= render partial: 'notifications/notification', collection: @notifications %>
+<% end %>
+<%= turbo_frame_tag :pagination,
+  loading: :lazy,
+  src: notifications_path(format: :turbo_stream) %>

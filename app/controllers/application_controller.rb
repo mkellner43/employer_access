@@ -1,9 +1,16 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
+  include Pagy::Backend
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!
+  before_action :load_notifications
+  helper_method :load_notifications
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  def load_notifications
+    @pagy, @notifications = pagy(current_user.notifications.includes(event: :record), items: 10) if current_user
+  end
 
   private
 

@@ -1,5 +1,5 @@
-<li id="notification-<%= notification.id %>">
-  <%= link_to notification.record, class: 'flex py-3 px-4 border-b hover:bg-gray-100 dark:hover:bg-gray-600 dark:border-gray-600' do %>
+<li id="notification-<%= notification&.id %>" class="flex py-3 px-4 border-b hover:bg-gray-100 dark:hover:bg-gray-600 dark:border-gray-600 list-none">
+  <%= link_to notification.record, data: { turbo_frame: '_top' } do %>
     <div class="flex-shrink-0">
       <%= image_tag user_avatar(notification.record.sender, size: 44), class: 'w-11 h-11 rounded-full', alt: notification.record.sender.full_name %>
       <div class="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 bg-gray-900 rounded-full border border-white dark:border-gray-700">
@@ -9,6 +9,7 @@
     <div class="pl-3 w-full">
       <div class="text-gray-500 font-normal text-sm mb-1.5 dark:text-gray-400"><span class="font-semibold text-gray-900 dark:text-white">Jese leos</span> and <span class="font-medium text-gray-900 dark:text-white">5 others</span> started following you.</div>
       <div class="text-xs font-medium text-primary-700 dark:text-primary-400">10 minutes ago</div>
+      <%= notification.message if notification.message %>
     </div>
   <% end %>
 </li>

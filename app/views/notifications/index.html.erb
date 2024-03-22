@@ -6,4 +6,6 @@
 <% end %>
 <%= turbo_frame_tag :pagination,
   loading: :lazy,
-  src: notifications_path(format: :turbo_stream) %>
+  src: notifications_path(format: :turbo_stream) do %>
+  <%= render partial: 'shared/loader' %>
+<% end %>

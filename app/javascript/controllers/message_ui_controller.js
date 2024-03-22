@@ -30,7 +30,3 @@ export default class extends Controller {
   }
 }
 
-// <%= message.user.id == user.id ? 'justify-end' : '' %>
-// <%= message.user.id == user.id ? 'order-1 items-end' : 'order-2 items-start' %>
-// <%= message.user.id == user.id ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-600' %>"
-// <%= message.user.id == user.id ? 'order-2' : 'order-1' %>

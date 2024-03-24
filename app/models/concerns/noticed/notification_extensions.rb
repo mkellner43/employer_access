@@ -4,27 +4,28 @@ module Noticed::NotificationExtensions
   extend ActiveSupport::Concern
 
   def broadcast_update_to_bell
-    broadcast_update_to(
+    broadcast_replace_to(
       "notifications_#{recipient.id}",
-      target: "notification_bell",
-      partial: "navbar/notifications/bell",
+      target: "notification_badge",
+      html: "<span id='notification_badge' class='absolute top-2 right-1 inline-flex items-center justify-center p-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full'>#{recipient.notifications.unread.count}</span>",
       locals: { user: recipient }
     )
   end
+  # GET BELL TO WORK!!
 
-  def broadcast_replace_to_index_count
-    broadcast_replace_to(
-      "notifications_index_#{recipient.id}",
-      target: "notification_index_count",
-      partial: "notifications/notifications_count",
-      locals: { count: recipient.reload.notifications_count, unread: recipient.reload.unread_notifications_count }
+  def broadcast_prepend_to_navbar
+    broadcast_prepend_to(
+      "notifications_#{recipient.id}",
+      target: "notification_frame",
+      partial: "notifications/notification",
+      locals: { notification: self }
     )
   end
 
   def broadcast_prepend_to_index_list
     broadcast_prepend_to(
       "notifications_#{recipient.id}",
-      target: "notifications",
+      target: "notification_frame_index",
       partial: "notifications/notification",
       locals: { notification: self }
     )

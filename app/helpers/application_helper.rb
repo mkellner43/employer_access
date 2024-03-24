@@ -8,4 +8,9 @@ module ApplicationHelper
     gravatar_id = Digest::MD5.hexdigest(email)
     "https://secure.gravatar.com/avatar/#{gravatar_id}?s=#{size}&d=robohash&r=pg"
   end
+
+  def unread_notification_count(notifications)
+    # notifications > 9 ? '9+' :
+    notifications
+  end
 end

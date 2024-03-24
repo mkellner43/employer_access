@@ -12,3 +12,6 @@
     <% end %>
   <% end %>
 <% end %>
+<%= turbo_stream.replace :notification_badge do %>
+  <span id='notification_badge' class="absolute top-2 right-1 inline-flex items-center justify-center p-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full"><%= user.notifications.unread.count %></span>
+<% end %>

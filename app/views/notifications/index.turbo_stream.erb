@@ -1,17 +1,17 @@
-<%= turbo_stream.append :notification_frame do %>
-  <%= render partial: 'notifications/notification', collection: @notifications %>
-<% end %>
-<%= turbo_stream.append :notification_frame_index do %>
-  <%= render partial: 'notifications/notification', collection: @notifications %>
-<% end %>
-<%= turbo_stream.replace :pagination do %>
-  <% if @pagy.next.present? %>
-    <%= turbo_frame_tag :pagination,
-      loading: :lazy, src: notifications_path(format: :turbo_stream, page: @pagy.next) do %>
-      <%= render partial: 'shared/loader' %>
+<%# turbo_stream.append :notification_frame do %>
+  <%# render partial: 'notifications/notification', collection: @notifications %>
+  <%# end %>
+  <%= turbo_stream.append :notification_frame_index do %>
+    <%= render partial: 'notifications/notification', collection: @notifications, locals: { context: 'index' } %>
+  <% end %>
+  <%= turbo_stream.replace :pagination do %>
+    <% if @pagy.next.present? %>
+      <%= turbo_frame_tag :pagination,
+    loading: :lazy, src: notifications_path(format: :turbo_stream, page: @pagy.next) do %>
+        <%= render partial: 'shared/loader' %>
+      <% end %>
     <% end %>
   <% end %>
-<% end %>
-<%= turbo_stream.replace :notification_badge do %>
-  <span id='notification_badge' class="absolute top-2 right-1 inline-flex items-center justify-center p-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full"><%= user.notifications.unread.count %></span>
-<% end %>
+  <%= turbo_stream.replace :notification_badge do %>
+    <span id='notification_badge' class="absolute top-2 right-1 inline-flex items-center justify-center p-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full"><%= user.notifications.unread.count %></span>
+  <% end %>

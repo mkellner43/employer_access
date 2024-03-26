@@ -9,7 +9,11 @@ class NewConversationNotifier < ApplicationNotifier
     def message
       params[:message]
     end
+
+    def from
+      params[:from]
+    end
   end
 
-  required_param :message
+  required_param :message, :from
 end

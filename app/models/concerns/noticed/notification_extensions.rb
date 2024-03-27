@@ -8,7 +8,7 @@ module Noticed::NotificationExtensions
     broadcast_replace_to(
       "notifications_#{recipient.id}",
       target: "notification_badge",
-      html: "<span id='notification_badge' class='absolute top-2 right-1 inline-flex items-center justify-center p-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full'>#{unread_notification_count(recipient.notifications.unread.count)}</span>",
+      partial: "notifications/notification_badge",
       locals: { user: recipient }
     )
   end

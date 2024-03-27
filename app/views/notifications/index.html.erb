@@ -1,5 +1,7 @@
 <%= link_to "Notifications", notifications_path,
   class:"block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400" %>
+<%= button_to 'READ ALL', mark_all_as_read_path, method: :patch %>
+<%= button_to 'UNREAD ALL', mark_all_as_unread_path, method: :patch %>
 <%= turbo_frame_tag :notification_frame_index do %>
   <%= render partial: 'notifications/notification', collection: @notifications, locals: { context: 'index' } %>
 <% end %>

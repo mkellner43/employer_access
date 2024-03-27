@@ -10,6 +10,8 @@ module ApplicationHelper
   end
 
   def unread_notification_count(notifications)
+    return if notifications.nil? || notifications.zero?
+
     notifications > 100 ? '100+' : notifications
   end
 end

@@ -33,6 +33,9 @@ gem "jbuilder"
 gem "redis", ">= 4.0.1"
 
 gem 'ransack'
+
+gem "rdoc", ">= 6.6.3.1"
+
 gem 'pagy'
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"

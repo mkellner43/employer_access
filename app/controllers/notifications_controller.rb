@@ -16,7 +16,7 @@ class NotificationsController < ApplicationController
   def show
     mark_as_read
     respond_to do |format|
-      format.html { redirect_to notifications_path }
+      format.html { redirect_to @notification.record }
     end
   end
 

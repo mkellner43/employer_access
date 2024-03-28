@@ -1,6 +1,9 @@
 <%= turbo_stream.append :notification_frame_index do %>
   <%= render partial: 'notifications/notification', collection: @notifications, locals: { context: 'index' } %>
 <% end %>
+<%= turbo_stream.update :notification_frame do %>
+  <%= render partial: 'notifications/notification', collection: @notifications, locals: { context: 'navbar' } %>
+<% end %>
 <%= turbo_stream.replace :pagination do %>
   <% if @pagy.next.present? %>
     <%= turbo_frame_tag :pagination,

@@ -32,12 +32,12 @@ class NotificationsController < ApplicationController
 
   def mark_all_as_read
     current_user.notifications.mark_as_read
-    redirect_back fallback_location: notifications_path
+    render action: :index, locals: { user: current_user }
   end
 
   def mark_all_as_unread
     current_user.notifications.mark_as_unread
-    redirect_back fallback_location: notifications_path
+    render action: :index, locals: { user: current_user }
   end
 
   private

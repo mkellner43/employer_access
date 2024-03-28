@@ -8,11 +8,10 @@ module Noticed::NotificationExtensions
     broadcast_replace_to(
       "notifications_#{recipient.id}",
       target: "notification_badge",
-      partial: "notifications/notification_badge",
+      partial: "navbar/notification_badge",
       locals: { user: recipient }
     )
   end
-  # GET BELL TO WORK!!
 
   def broadcast_prepend_to_navbar
     broadcast_prepend_to(
@@ -30,6 +29,15 @@ module Noticed::NotificationExtensions
     )
   end
 
+  def broadcast_replace_to_navbar
+    broadcast_replace_to(
+      "notifications_#{recipient.id}",
+      target: "notification-#{id}-navbar",
+      partial: "notifications/notification",
+      locals: { notification: self, context: "navbar" }
+    )
+  end
+
   def broadcast_prepend_to_index_list
     broadcast_prepend_to(
       "notifications_#{recipient.id}",
@@ -43,6 +51,15 @@ module Noticed::NotificationExtensions
     broadcast_remove_to(
       "notifications_#{recipient.id}",
       target: "notification-#{id}-index",
+    )
+  end
+
+  def broadcast_replace_to_index_list
+    broadcast_replace_to(
+      "notifications_#{recipient.id}",
+      target: "notification-#{id}-index",
+      partial: "notifications/notification",
+      locals: { notification: self, context: "index" }
     )
   end
 end

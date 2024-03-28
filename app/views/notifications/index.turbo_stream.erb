@@ -10,5 +10,5 @@
   <% end %>
 <% end %>
 <%= turbo_stream.replace :notification_badge do %>
-  <%= render partial: 'navbar/notification_badge' %>
+  <%= render partial: 'navbar/notification_badge', locals: {user: user} %>
 <% end %>

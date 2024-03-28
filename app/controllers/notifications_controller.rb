@@ -4,12 +4,8 @@ class NotificationsController < ApplicationController
   before_action :set_notification, only: %i[show mark_as_read mark_as_unread]
 
   def index
-    @pagy, @notifications = pagy(
-      current_user.notifications
-        .includes(event: :record)
-        .order(read_at: :desc, created_at: :desc),
-      items: 10
-    )
+    @pagy, @notifications = pagy(current_user.notifications.includes(event: :record).order(created_at: :desc),
+                                 items: 10)
 
     respond_to do |format|
       format.turbo_stream { render locals: { user: current_user } }
@@ -18,22 +14,20 @@ class NotificationsController < ApplicationController
   end
 
   def show
-    @notification.mark_as_read!
-    redirect_to @notification.record
+    mark_as_read
+    respond_to do |format|
+      format.html { redirect_to notifications_path }
+    end
   end
 
   def mark_as_read
     @notification.mark_as_read!
-    @notification.broadcast_update_to_bell
-    @notification.broadcast_remove_to_navbar
-    @notification.broadcast_remove_to_index
+    broadcast_notification_update
   end
 
   def mark_as_unread
     @notification.mark_as_unread!
-    @notification.broadcast_update_to_bell
-    @notification.broadcast_prepend_to_navbar
-    @notification.broadcast_prepend_to_index_list
+    broadcast_notification_update
   end
 
   def mark_all_as_read
@@ -47,6 +41,12 @@ class NotificationsController < ApplicationController
   end
 
   private
+
+  def broadcast_notification_update
+    @notification.broadcast_update_to_bell
+    @notification.broadcast_replace_to_navbar
+    @notification.broadcast_replace_to_index_list
+  end
 
   def notification_params
     params.require(:notification).permit(:message)

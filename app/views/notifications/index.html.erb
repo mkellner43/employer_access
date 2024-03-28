@@ -1,7 +1,11 @@
 <%= link_to "Notifications", notifications_path,
-  class:"block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400" %>
-<%= button_to 'READ ALL', mark_all_as_read_path, method: :patch %>
-<%= button_to 'UNREAD ALL', mark_all_as_unread_path, method: :patch %>
+  class: "block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-100 dark:bg-gray-700 dark:text-gray-400 mb-4 rounded-md shadow-md hover:bg-gray-200 dark:hover:bg-gray-600" %>
+<% if has_notifications? %>
+  <div class="flex justify-between mb-4">
+    <%= button_to 'READ ALL', mark_all_as_read_path, method: :patch, class: 'bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md shadow-md' %>
+    <%= button_to 'UNREAD ALL', mark_all_as_unread_path, method: :patch, class: 'bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-md shadow-md' %>
+  </div>
+<% end %>
 <%= turbo_frame_tag :notification_frame_index do %>
   <%= render partial: 'notifications/notification', collection: @notifications, locals: { context: 'index' } %>
 <% end %>

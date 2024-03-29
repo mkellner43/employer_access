@@ -15,7 +15,8 @@ class ConversationsController < ApplicationController
 
   # GET /conversations/1 or /conversations/1.json
   def show
-    authorize Conversation
+    authorize @conversation
+
     @message = Message.new
     @user = current_user
     @messages = @conversation.messages.includes(user: { avatar_attachment: :blob }).with_attached_attachment

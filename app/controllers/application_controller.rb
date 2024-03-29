@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def load_notifications
-    @notifications = current_user.notifications.includes(:event).order(created_at: :desc).limit(10)
+    @notifications = current_user.notifications.includes(:event).order(created_at: :desc).limit(10) if current_user
   end
 
   private

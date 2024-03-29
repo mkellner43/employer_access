@@ -11,6 +11,9 @@ class ConversationPolicy < ApplicationPolicy
   end
 
   def show?
+    puts conversation
+    puts user
+    puts record
     user.role == 'agent' || user.role == 'admin' || user == conversation.sender
   end
 

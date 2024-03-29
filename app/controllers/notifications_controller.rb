@@ -2,11 +2,9 @@ class NotificationsController < ApplicationController
   include Pagy::Backend
   before_action :authenticate_user!
   before_action :set_notification, only: %i[show mark_as_read mark_as_unread]
+  before_action :get_notifications, only: %i[index mark_all_as_read mark_all_as_unread]
 
   def index
-    @pagy, @notifications = pagy(current_user.notifications.includes(event: :record).order(created_at: :desc),
-                                 items: 10)
-
     respond_to do |format|
       format.turbo_stream { render locals: { user: current_user } }
       format.html
@@ -54,5 +52,10 @@ class NotificationsController < ApplicationController
 
   def set_notification
     @notification = current_user.notifications.find(params[:id])
+  end
+
+  def get_notifications
+    @pagy, @notifications = pagy(current_user.notifications.includes(event: :record).order(created_at: :desc),
+                                 items: 10)
   end
 end

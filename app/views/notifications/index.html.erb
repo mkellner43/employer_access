@@ -9,8 +9,10 @@
 <%= turbo_frame_tag :notification_frame_index do %>
   <%= render partial: 'notifications/notification', collection: @notifications, locals: { context: 'index' } %>
 <% end %>
-<%= turbo_frame_tag :pagination,
+<% if @pagy.next.present? %>
+  <%= turbo_frame_tag :pagination,
   loading: :lazy,
   src: notifications_path(format: :turbo_stream) do %>
-  <%= render partial: 'shared/loader' %>
+    <%= render partial: 'shared/loader' %>
+  <% end %>
 <% end %>

@@ -55,7 +55,7 @@ class NotificationsController < ApplicationController
   end
 
   def get_notifications
-    @pagy, @notifications = pagy(current_user.notifications.includes(event: :record).order(created_at: :desc),
+    @pagy, @notifications = pagy(current_user.notifications.includes(:event).order(created_at: :desc),
                                  items: 10)
   end
 end

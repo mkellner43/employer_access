@@ -18,7 +18,7 @@ class ConversationsController < ApplicationController
     authorize Conversation
     @message = Message.new
     @user = current_user
-    @messages = @conversation.messages.includes(:user)
+    @messages = @conversation.messages.includes(user: { avatar_attachment: :blob }).with_attached_attachment
   end
 
   # GET /conversations/new
@@ -76,7 +76,7 @@ class ConversationsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_conversation
-    @conversation = Conversation.includes(messages: :user).find(params[:id])
+    @conversation = Conversation.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

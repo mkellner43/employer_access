@@ -94,6 +94,7 @@ class ConversationsController < ApplicationController
     elsif @conversation.status == 'completed'
       message = @conversation.messages.create!(user: current_user,
                                                content: "#{current_user.email} has left the conversation")
+      update_status
       update_messages_stream(message)
     end
   end
@@ -106,3 +107,5 @@ class ConversationsController < ApplicationController
     end
   end
 end
+
+# need to set to robot when leaving conversation! Should make the collecting context easier too!

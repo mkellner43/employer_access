@@ -2,10 +2,7 @@
 <%= turbo_frame_tag dom_id(@conversation), class: "flex-1 p:2 sm:p-6 justify-between flex flex-col h-screen" do %>
   <div class="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
     <div class="flex flex-col space-x-4">
-      <div class="flex items-center">
-        <%= image_tag user_avatar(check_receiver(@conversation), size: 64), class: "w-16 h-16 rounded-full", alt: check_receiver(@conversation).full_name %>
-        <p class="ml-2 text-sm text-gray-700"><%= check_receiver(@conversation).full_name %></p>
-      </div>
+      <%= render 'conversations/user_conversation_details', conversation: @conversation %>
       <div class="flex items-center">
         <span class="text-lg text-gray-700">Group:</span>
         <span class="ml-2 text-lg text-gray-600 capitalize"><%= @conversation.groups %></span>

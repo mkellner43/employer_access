@@ -1,0 +1,4 @@
+<%= turbo_frame_tag dom_id(conversation, 'user_conversation_details'), class: "flex items-center" do %>
+  <%= image_tag user_avatar(check_receiver(conversation), size: 64), class: "w-16 h-16 rounded-full", alt: check_receiver(conversation).full_name %>
+  <p class="ml-2 text-sm text-gray-700"><%= check_receiver(conversation).full_name %></p>
+<% end %>

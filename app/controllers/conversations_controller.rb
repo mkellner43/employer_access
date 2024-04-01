@@ -12,6 +12,7 @@ class ConversationsController < ApplicationController
     @conversations = @q.result(distinct: true).includes(:receiver, :sender)
     @pagy, @conversations = pagy(@q.result(distinct: true).includes(:receiver, :sender).order(updated_at: :desc),
                                  items: 10)
+    render locals: { user: current_user }
   end
 
   # GET /conversations/1 or /conversations/1.json

@@ -2,7 +2,7 @@
   <%= turbo_stream_from 'agent_conversations' %>
   <div class="mx-auto">
     <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
-      <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4 bg-gray-200 dark:bg-gray-800">
+      <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4 bg-gray-200 dark:bg-gray-900">
         <div class="w-full md:w-1/2">
           <%= search_form_for @q, class: 'flex items-center' do |f| %>
             <%= f.label :q, "Search", class: 'sr-only' %>
@@ -43,7 +43,7 @@
       </div>
       <div class="overflow-x-auto">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-900 dark:text-gray-400">
             <tr>
               <th scope="col" class="px-4 py-3 whitespace-nowrap"><%= sort_link(@q, :status)%></th>
               <th scope="col" class="px-4 py-3 whitespace-nowrap"><%= sort_link(@q, :groups, "Employer Group")%></th>
@@ -57,11 +57,11 @@
             </tr>
           </thead>
           <tbody>
-            <%= render @conversations, locals: { user: current_user } %>
+            <%= render @conversations, user: current_user %>
           </tbody>
         </table>
       </div>
-      <div class='bg-gray-100 dark:bg-gray-800 p-2'>
+      <div class='bg-gray-100 dark:bg-gray-900 p-2'>
         <%== pagy_nav(@pagy) if @pagy.pages > 1 %>
       </div>
     </div>

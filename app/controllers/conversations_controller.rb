@@ -10,7 +10,8 @@ class ConversationsController < ApplicationController
     authorize Conversation
     @q = Conversation.ransack(params[:q])
     @conversations = @q.result(distinct: true).includes(:receiver, :sender)
-    @pagy, @conversations = pagy(@q.result(distinct: true).includes(:receiver, :sender), items: 10)
+    @pagy, @conversations = pagy(@q.result(distinct: true).includes(:receiver, :sender).order(updated_at: :desc),
+                                 items: 10)
   end
 
   # GET /conversations/1 or /conversations/1.json
@@ -50,6 +51,10 @@ class ConversationsController < ApplicationController
 
   # PATCH/PUT /conversations/1 or /conversations/1.json
   def update
+    if conversation_params[:status] == "completed"
+      set_receiver_to_robot
+    end
+
     respond_to do |format|
       if @conversation.update(conversation_params)
         update_status
@@ -87,14 +92,13 @@ class ConversationsController < ApplicationController
 
   # Create a join message to notify other user someone has joined the conversation
   def create_action_message
-    if current_user.role == 'agent' && @conversation.status == 'active'
+    if current_user.role == 'agent' || current_user.role == 'admin' && @conversation.status == 'active'
       message = @conversation.messages.create!(user: current_user,
                                                content: "#{current_user.email} has joined the conversation")
       update_messages_stream(message)
     elsif @conversation.status == 'completed'
       message = @conversation.messages.create!(user: current_user,
                                                content: "#{current_user.email} has left the conversation")
-      update_status
       update_messages_stream(message)
     end
   end
@@ -105,6 +109,10 @@ class ConversationsController < ApplicationController
     else
       conversations_path
     end
+  end
+
+  def set_receiver_to_robot
+    @conversation.receiver = User.find_by(role: 'robot')
   end
 end
 

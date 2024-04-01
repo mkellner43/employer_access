@@ -1,4 +1,4 @@
-<tr class="border-b dark:border-gray-700">
+<tr class="border-b dark:border-gray-700" id='agent_conversation_<%= conversation.id %>'>
   <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><%=conversation.status %></th>
   <td class="px-4 py-3 max-w-xs truncate"><%=conversation.groups%></td>
   <td class="px-4 py-3 max-w-xs truncate"><%=conversation.sender.first_name %> <%=conversation.sender.last_name %></td>
@@ -17,7 +17,7 @@
           <%= link_to "View", conversation_path(conversation), class: 'block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full text-center' %>
         </li>
         <li>
-          <%= button_to "Enter", conversation_path(conversation), method: :patch, params: { conversation: {receiver_id: current_user.id, status: "active" } }, class: 'block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full text-center' %>
+          <%= button_to "Enter", conversation_path(conversation), method: :patch, params: { conversation: {receiver_id: user.id, status: "active" } }, class: 'block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full text-center' %>
         </li>
       </ul>
     </div>

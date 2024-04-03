@@ -3,14 +3,12 @@ Rails.application.routes.draw do
     resources :messages, only: [:new, :create]
   end
   devise_for :users
-  # get "/notifications", to: "notifications#index"
   patch "/notifications/:id/mark_as_read", to: "notifications#mark_as_read", as: :mark_as_read
   patch "/notifications/mark_all_as_read", to: "notifications#mark_all_as_read", as: :mark_all_as_read
   patch "/notifications/:id/mark_as_unread", to: "notifications#mark_as_unread", as: :mark_as_unread
   patch "/notifications/mark_all_as_unread", to: "notifications#mark_all_as_unread", as: :mark_all_as_unread
-  # get "/notifications/:id", to: "notifications#show"
-
-  resources :notifications
+  resources :notifications, only: [:index, :show]
+  get "/dashboard", to: "dashboard#index"
 
   root "dashboard#root"
 end

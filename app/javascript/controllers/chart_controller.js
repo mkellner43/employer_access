@@ -3,11 +3,13 @@ import { Controller } from "@hotwired/stimulus";
 // Connects to data-controller="chart"
 export default class extends Controller {
   static values = {
-    dataPoints: Array,
-    dataLabels: Array,
+    chart: Array,
+    labels: Array,
   };
   connect() {
     this.loadChart();
+    console.log(this.chartValue);
+    console.log(this.labelsValue);
   }
 
   loadChart() {
@@ -56,13 +58,16 @@ export default class extends Controller {
       },
       series: [
         {
-          name: "New users",
-          data: this.dataPointsValue,
+          name: "New Conversations",
+          data: this.chartValue,
           color: "#1A56DB",
         },
       ],
+      noData: {
+        text: "Loading...",
+      },
       xaxis: {
-        categories: this.dataLabelsValue,
+        categories: this.labelsValue,
         labels: {
           show: false,
         },

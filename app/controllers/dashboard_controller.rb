@@ -8,16 +8,14 @@ class DashboardController < ApplicationController
   end
 
   def index
-    # query data for chart instead of static
-    @chart_data = [6500, 6418, 6456, 6526, 6356, 6456]
-    @chart_labels = [
-      "11 February",
-      "12 February",
-      "13 February",
-      "14 February",
-      "15 February",
-      "16 February",
-      "17 February",
-    ]
+    time_period = params[:time_period].present? ? params[:time_period].to_i.days.ago : 7.days.ago
+    chart_data = Conversation.group_by_day(time_period)
+    @chart_values = chart_data.values.to_json
+    @chart_labels = chart_data.keys.to_json
+    @filtered_time_periods = [['Last 7 days', 7], ['Last 14 days', 14], ['Last month', 30], ['Last 6 months', 180],
+                              ['All time', 10000]]
+    @selected_time_period = @filtered_time_periods.find { |label, days|
+                              days == params[:time_period].to_i
+                            }&.first || 'Last 7 days'
   end
 end

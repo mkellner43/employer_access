@@ -1,18 +1,33 @@
-<%= link_to "Notifications", notifications_path,
-  class: "block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-100 dark:bg-gray-700 dark:text-gray-400 mb-4 rounded-md shadow-md hover:bg-gray-200 dark:hover:bg-gray-600" %>
-<% if has_notifications? %>
-  <div class="flex justify-between mb-4">
-    <%= button_to 'READ ALL', mark_all_as_read_path, method: :patch, class: 'bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md shadow-md' %>
-    <%= button_to 'UNREAD ALL', mark_all_as_unread_path, method: :patch, class: 'bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-md shadow-md' %>
+<section class="container mx-auto">
+  <div class="flex justify-center items-center my-10">
+    <%= link_to "Notifications", notifications_path,
+  class: "block py-2 px-4 text-xl font-medium text-center text-gray-700 dark:text-white flex-grow" %>
+    <button id="dropdownMenuIconButton" data-dropdown-toggle="notificationDropdownDots" data-dropdown-placement="bottom-start" class="inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-600" type="button" <%= has_notifications? ? "" : "disabled" %> >
+      <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
+        <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
+      </svg>
+    </button>
   </div>
-<% end %>
-<%= turbo_frame_tag :notification_frame_index do %>
-  <%= render partial: 'notifications/notification', collection: @notifications, locals: { context: 'index' } %>
-<% end %>
-<% if @pagy.next.present? %>
-  <%= turbo_frame_tag :pagination,
+  <% if has_notifications? %>
+    <div id="notificationDropdownDots" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+      <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+        <li>
+          <%= button_to 'READ ALL', mark_all_as_read_path, method: :patch, class: "block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
+        </li>
+        <li>
+          <%= button_to 'UNREAD ALL', mark_all_as_unread_path, method: :patch, class: "block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
+        </li>
+      </ul>
+    </div>
+  <% end %>
+  <%= turbo_frame_tag :notification_frame_index do %>
+    <%= render partial: 'notifications/notification', collection: @notifications, locals: { context: 'index' } %>
+  <% end %>
+  <% if @pagy.next.present? %>
+    <%= turbo_frame_tag :pagination,
   loading: :lazy,
   src: notifications_path(format: :turbo_stream) do %>
-    <%= render partial: 'shared/loader' %>
+      <%= render partial: 'shared/loader' %>
+    <% end %>
   <% end %>
-<% end %>
+</section>

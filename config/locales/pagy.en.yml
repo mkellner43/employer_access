@@ -1,0 +1,5 @@
+en:
+  pagy:
+    gap: "..."
+    prev: "<span class='prev-chevron'>&lt;</span>&nbsp;Prev"
+    next: "Next&nbsp;<span class='next-chevron'>&gt;</span>"

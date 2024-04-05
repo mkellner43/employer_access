@@ -30,10 +30,10 @@
           <div id="filterDropdown" class="z-10 hidden w-48 p-3 bg-white rounded-lg shadow dark:bg-gray-700">
             <ul class="space-y-2 text-sm" aria-labelledby="filterDropdownButton">
               <li class="flex items-center">
-                <%= link_to "My Conversations", conversations_path(q: { receiver_id_eq: current_user.id }), class: 'w-full text-center hover:text-primary-700' %>
+                <%= link_to "My Conversations", conversations_path(q: { receiver_id_eq: current_user.id }), class: 'w-full text-center hover:text-primary-700 dark:text-gray-400 dark:hover:text-white' %>
               </li>
               <li class="flex items-center">
-                <%= link_to "All Conversations", conversations_path, class: 'w-full text-center hover:text-primary-700' %>
+                <%= link_to "All Conversations", conversations_path, class: 'w-full text-center hover:text-primary-700 dark:text-gray-400 dark:hover:text-white' %>
               </li>
             </ul>
           </div>
@@ -60,7 +60,7 @@
         </tbody>
       </table>
     </div>
-    <div class='bg-gray-100 dark:bg-gray-800 p-2'>
+    <div class='bg-gray-100 dark:bg-gray-800 p-2 w-full flex justify-center items-center'>
       <%== pagy_nav(@pagy) if @pagy.pages > 1 %>
     </div>
   </div>

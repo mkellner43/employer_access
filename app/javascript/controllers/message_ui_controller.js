@@ -24,9 +24,8 @@ export default class extends Controller {
       message_img.classList.add("order-2");
     } else {
       message_section.classList.add("order-2", "items-start");
-      message_span.classList.add("bg-gray-300", "text-gray-600");
+      message_span.classList.add("bg-gray-300", "text-gray-600", "dark:bg-gray-700", "dark:text-gray-300");
       message_img.classList.add("order-1");
     }
   }
 }
-

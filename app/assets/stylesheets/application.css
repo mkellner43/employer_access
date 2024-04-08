@@ -31,6 +31,17 @@
   background-color: rgba(237, 242, 247, var(--bg-opacity));
 }
 
+.dark .scrollbar-track-blue-lighter::-webkit-scrollbar-track {
+  --bg-opacity: 1;
+  background-color: rgba(17, 24, 39, var(--bg-opacity));
+}
+
+.dark .scrollbar-thumb-blue::-webkit-scrollbar-thumb {
+  --bg-opacity: 1;
+  background-color: #2d3748;
+  background-color: rgba(45, 55, 72, var(--bg-opacity));
+}
+
 .scrollbar-thumb-rounded::-webkit-scrollbar-thumb {
   border-radius: 0.25rem;
 }

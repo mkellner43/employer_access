@@ -1,0 +1,49 @@
+<%= form_with(model: [current_user, profile], class: "contents") do |form| %>
+  <% if profile.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
+      <ul>
+        <% profile.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= form.hidden_field :user_id, value: current_user.id %>
+  <div>
+    <%= form.label :date_of_birth, class:"block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+    <%= form.date_field :date_of_birth, class:"bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  %>
+  </div>
+  <div>
+    <%= form.label :phone_number, class:"block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+    <%= form.text_field :phone_number, pattern: "[0-9]{3}-[0-9]{3}-[0-9]{4}", placeholder:"123-456-7890", class:"bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  %>
+  </div>
+  <div>
+    <%= form.label :bio, class:"block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+    <%= form.text_area :bio, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+  </div>
+  <div>
+    <%= form.label :street_address, class:"block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+    <%= form.text_field :street_address, class:"bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  %>
+  </div>
+  <div>
+    <%= form.label :city, class:"block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+    <%= form.text_field :city, class:"bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  %>
+  </div>
+  <div>
+    <%= form.label :state, class:"block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+    <%= form.text_field :state, class:"bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  %>
+  </div>
+  <div>
+    <%= form.label :zip_code, class:"block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+    <%= form.text_field :zip_code, class:"bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  %>
+  </div>
+  <div class="inline">
+    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>
+<%#
+
+    t.date "date_of_birth"
+
+    t.string "phone_number" %>

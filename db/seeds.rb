@@ -8,14 +8,17 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 require 'faker'
+
 49.times do
-  User.create!(
+  user = User.create(
     email: Faker::Internet.unique.email,
     password: 'password',
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
-    role: ['user', 'agent', 'admin'].sample
+    role: ['user', 'agent', 'admin'].sample,
   )
+  # user.profile = Profile.new(street_address: Faker::Address.street_address)
+  user.save!
 end
 
 User.create!(
@@ -23,10 +26,10 @@ User.create!(
   password: 'password',
   first_name: "Anthem",
   last_name: "Chatbot",
-  role: 'robot'
+  role: 'robot',
 )
 
-# Create 100 conversations
+# # Create 100 conversations
 users = User.all
 100.times do
   sender, receiver = users.sample(2)

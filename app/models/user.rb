@@ -10,6 +10,8 @@ class User < ApplicationRecord
   has_many :notifications, as: :recipient, dependent: :destroy, class_name: "Noticed::Notification"
   has_many :sent_conversations, foreign_key: 'sender_id', dependent: :destroy, class_name: "Conversation"
   has_many :received_conversations, foreign_key: 'receiver_id', dependent: :destroy, class_name: "Conversation"
+  has_one :profile, dependent: :destroy
+  after_create :create_profile
 
   def full_name
     "#{first_name} #{last_name}"
@@ -17,5 +19,11 @@ class User < ApplicationRecord
 
   def self.ransackable_attributes(auth_object = nil)
     ["created_at", "email", "id", "role", "updated_at", "first_name", "last_name"]
+  end
+
+  private
+
+  def create_profile
+    Profile.create!(user: self)
   end
 end

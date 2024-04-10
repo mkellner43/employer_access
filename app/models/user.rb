@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :received_conversations, foreign_key: 'receiver_id', dependent: :destroy, class_name: "Conversation"
   has_one :profile, dependent: :destroy
   after_create :create_profile
+  attr_accessor :remove_avatar
 
   def full_name
     "#{first_name} #{last_name}"

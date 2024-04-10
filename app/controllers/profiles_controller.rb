@@ -30,6 +30,7 @@ class ProfilesController < ApplicationController
   def update
     respond_to do |format|
       if @profile.update(profile_params)
+        @profile.user.avatar.purge if @profile.user.remove_avatar == '1'
         format.html {
           redirect_to user_profile_path(current_user, @profile), notice: "Profile was successfully updated."
         }
@@ -45,12 +46,13 @@ class ProfilesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_profile
-    @user = current_user
-    @profile = @user.profile
+    @profile = current_user.profile
   end
 
   # Only allow a list of trusted parameters through.
   def profile_params
-    params.require(:profile).permit(:city, :state, :zip_code, :street_address, :date_of_birth, :bio, :phone_number)
+    params.require(:profile).permit(:id, :user_id, :city, :state, :zip_code, :street_address, :date_of_birth, :bio,
+                                    :phone_number, user_attributes: [:id, :first_name, :last_name, :avatar,
+                                                                     :remove_avatar])
   end
 end

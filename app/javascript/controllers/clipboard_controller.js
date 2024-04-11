@@ -3,43 +3,43 @@ import { Controller } from "@hotwired/stimulus";
 // Connects to data-controller="clipboard"
 export default class extends Controller {
   static targets = [
+    "contactDetails",
     "defaultIcon",
     "successIcon",
     "defaultTooltip",
     "successTooltip",
+    "tooltip",
   ];
-  connect() {
-    const clipboard = FlowbiteInstances.getInstance(
-      "CopyClipboard",
-      "contact-details"
-    );
-    const tooltip = FlowbiteInstances.getInstance(
-      "Tooltip",
-      "tooltip-contact-details"
-    );
-    clipboard.updateOnCopyCallback((clipboard) => {
-      this.showSuccess(tooltip);
 
-      // reset to default state
-      setTimeout(() => {
-        this.resetToDefault(tooltip);
-      }, 2000);
-    });
+  copy(event) {
+    event.preventDefault();
+    const textToCopy = this.contactDetailsTarget.innerText;
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        this.showSuccess();
+      })
+      .catch((err) => {
+        console.error("Error copying text: ", err);
+      });
   }
 
-  showSuccess(tooltip) {
+  connect() {}
+
+  showSuccess() {
     this.defaultIconTarget.classList.add("hidden");
     this.successIconTarget.classList.remove("hidden");
     this.defaultTooltipTarget.classList.add("hidden");
     this.successTooltipTarget.classList.remove("hidden");
-    tooltip.show();
+    setTimeout(() => {
+      this.resetToDefault();
+    }, 2000);
   }
 
-  resetToDefault(tooltip) {
+  resetToDefault() {
     this.defaultIconTarget.classList.remove("hidden");
     this.successIconTarget.classList.add("hidden");
     this.defaultTooltipTarget.classList.remove("hidden");
     this.successTooltipTarget.classList.add("hidden");
-    tooltip.hide();
   }
 }

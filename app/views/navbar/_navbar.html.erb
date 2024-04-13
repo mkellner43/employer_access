@@ -24,7 +24,7 @@
         </button>
         <!-- Notification Dropdown -->
         <div id="notification-dropdown" class="hidden overflow-y-scroll z-50 my-4 max-w-sm text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg dark:divide-gray-600 dark:bg-gray-700 max-h-[calc(100vh-200px)]">
-          <% if @notifications.any? %>
+          <% if @notifications.present? %>
             <%= turbo_frame_tag :notification_frame do %>
               <%= render partial: "notifications/notification", collection: @notifications, locals: { context: 'navbar' } %>
             <% end %>
